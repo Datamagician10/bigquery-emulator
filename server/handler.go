@@ -3284,6 +3284,9 @@ func createTableMetadata(ctx context.Context, tx *connection.Tx, server *Server,
 		table.Type = string(internaltypes.ViewTableType)
 		table.View.Query = strings.TrimRight(table.View.Query, contentdata.ViewQueryEndCutset)
 	}
+	if table.MaterializedView != nil {
+		table.Type = string(internaltypes.MaterializedViewTableType)
+	}
 	table.Kind = "bigquery#table"
 	table.SelfLink = fmt.Sprintf(
 		"http://%s/bigquery/v2/projects/%s/datasets/%s/tables/%s",
